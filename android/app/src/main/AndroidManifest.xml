@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sigb">
+    package="com.mpk5.sigb">
    <application
         android:label="sigb"
         android:name="${applicationName}"

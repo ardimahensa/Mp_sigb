@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "793023369598",
+    "project_id": "persediaan-gabah",
+    "storage_bucket": "persediaan-gabah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793023369598:android:65b843023b287d163d232f",
+        "android_client_info": {
+          "package_name": "com.mpk5.sigb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793023369598-9hsh6e0bn8bhsp147u796qtdk1qgcntc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi32X1i38ZsMxp2OdfY7ANmLXboaSxxFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793023369598-9hsh6e0bn8bhsp147u796qtdk1qgcntc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
