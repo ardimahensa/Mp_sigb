@@ -1,49 +1,36 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sigb/page/forgotpassword_page.dart';
 
-class SignUp extends StatefulWidget {
-  final VoidCallback showLoginPage;
-  const SignUp({
+class Login extends StatefulWidget {
+  final VoidCallback showRegisterPage;
+  const Login({
     Key? key,
-    required this.showLoginPage,
+    required this.showRegisterPage,
   }) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState extends State<Login> {
   //text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _autentifikasiController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _autentifikasiController.dispose();
     super.dispose();
-  }
-
-  Future register() async {
-    if (passwordConfirm()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    }
-  }
-
-  bool passwordConfirm() {
-    if (_passwordController.text.trim() ==
-        _autentifikasiController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   @override
@@ -51,7 +38,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15),
         child: SafeArea(
           child: CustomScrollView(
             slivers: <Widget>[
@@ -63,7 +50,7 @@ class _SignUpState extends State<SignUp> {
                         Padding(
                           padding: EdgeInsets.only(top: 30),
                           child: Text(
-                            'DAFTAR AKUN.',
+                            'HELLO.',
                             style: TextStyle(
                               fontSize: 40,
                               color: Colors.white,
@@ -83,7 +70,7 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                     const Text(
-                      'Isi Data Diri',
+                      'Selamat Datang',
                       style: TextStyle(
                         fontSize: 36,
                         color: Colors.white,
@@ -91,7 +78,8 @@ class _SignUpState extends State<SignUp> {
                         letterSpacing: 5,
                       ),
                     ),
-                    const SizedBox(width: 35, height: 33),
+                    const SizedBox(width: 40),
+                    const SizedBox(height: 40),
 // Form username & password
                     Form(
                       child: Column(
@@ -154,36 +142,40 @@ class _SignUpState extends State<SignUp> {
                                   vertical: 4, horizontal: 16),
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          //autentifikasi password
-                          TextFormField(
-                            controller: _autentifikasiController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: 'Confirm Password',
-                              fillColor: Colors.white,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const ForgotPassword();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Lupa Password ?',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 16),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 20),
+
+                          // const SizedBox(height: 20),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: GestureDetector(
-                              onTap: register,
+                              onTap: signIn,
                               child: Container(
                                 padding: const EdgeInsets.all(13),
                                 decoration: BoxDecoration(
@@ -192,7 +184,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Daftar',
+                                    'Login',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -219,12 +211,12 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Sudah Punya Akun ?'),
+                        child: Text('Tidak Punya Akun ?'),
                       ),
                       GestureDetector(
-                        onTap: widget.showLoginPage,
+                        onTap: widget.showRegisterPage,
                         child: const Text(
-                          'Login Disini',
+                          'Daftar Disini',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

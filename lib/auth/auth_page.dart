@@ -1,8 +1,8 @@
 // ignore_for_file: implementation_imports
 
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sigb/loginandsignup/login_page.dart';
-import 'package:sigb/loginandsignup/signup_page.dart';
+import 'package:sigb/page/login_page.dart';
+import 'package:sigb/page/signup_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);

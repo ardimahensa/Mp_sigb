@@ -1,35 +1,49 @@
 // ignore_for_file: deprecated_member_use
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class Login extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const Login({
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class SignUp extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const SignUp({
     Key? key,
-    required this.showRegisterPage,
+    required this.showLoginPage,
   }) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   //text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-  }
+  final _autentifikasiController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _autentifikasiController.dispose();
     super.dispose();
+  }
+
+  Future register() async {
+    if (passwordConfirm()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    }
+  }
+
+  bool passwordConfirm() {
+    if (_passwordController.text.trim() ==
+        _autentifikasiController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -37,7 +51,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15),
         child: SafeArea(
           child: CustomScrollView(
             slivers: <Widget>[
@@ -49,7 +63,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: EdgeInsets.only(top: 30),
                           child: Text(
-                            'HELLO.',
+                            'DAFTAR AKUN.',
                             style: TextStyle(
                               fontSize: 40,
                               color: Colors.white,
@@ -69,7 +83,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     const Text(
-                      'Selamat Datang',
+                      'Isi Data Diri',
                       style: TextStyle(
                         fontSize: 36,
                         color: Colors.white,
@@ -77,8 +91,7 @@ class _LoginState extends State<Login> {
                         letterSpacing: 5,
                       ),
                     ),
-                    const SizedBox(width: 40),
-                    const SizedBox(height: 40),
+                    const SizedBox(width: 35, height: 33),
 // Form username & password
                     Form(
                       child: Column(
@@ -141,11 +154,36 @@ class _LoginState extends State<Login> {
                                   vertical: 4, horizontal: 16),
                             ),
                           ),
+                          const SizedBox(height: 16),
+                          //autentifikasi password
+                          TextFormField(
+                            controller: _autentifikasiController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: 'Confirm Password',
+                              fillColor: Colors.white,
+                              filled: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 16),
+                            ),
+                          ),
                           const SizedBox(height: 20),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             child: GestureDetector(
-                              onTap: signIn,
+                              onTap: register,
                               child: Container(
                                 padding: const EdgeInsets.all(13),
                                 decoration: BoxDecoration(
@@ -154,7 +192,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Login',
+                                    'Daftar',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -181,12 +219,12 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Tidak Punya Akun ?'),
+                        child: Text('Sudah Punya Akun ?'),
                       ),
                       GestureDetector(
-                        onTap: widget.showRegisterPage,
+                        onTap: widget.showLoginPage,
                         child: const Text(
-                          'Daftar Disini',
+                          'Login Disini',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
