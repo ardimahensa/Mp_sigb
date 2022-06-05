@@ -1,16 +1,51 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sigb/main.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  final VoidCallback showLoginPage;
+  const SignUp({
+    Key? key,
+    required this.showLoginPage,
+  }) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  //text controller
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _autentifikasiController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _autentifikasiController.dispose();
+    super.dispose();
+  }
+
+  Future register() async {
+    if (passwordConfirm()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    }
+  }
+
+  bool passwordConfirm() {
+    if (_passwordController.text.trim() ==
+        _autentifikasiController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +63,9 @@ class _SignUpState extends State<SignUp> {
                         Padding(
                           padding: EdgeInsets.only(top: 30),
                           child: Text(
-                            'HELLO.',
+                            'DAFTAR AKUN.',
                             style: TextStyle(
-                              fontSize: 48,
+                              fontSize: 40,
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.5,
@@ -48,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                     const Text(
-                      'Selamat Datang',
+                      'Isi Data Diri',
                       style: TextStyle(
                         fontSize: 36,
                         color: Colors.white,
@@ -56,8 +91,7 @@ class _SignUpState extends State<SignUp> {
                         letterSpacing: 5,
                       ),
                     ),
-                    const SizedBox(width: 40),
-                    const SizedBox(height: 40),
+                    const SizedBox(width: 35, height: 33),
 // Form username & password
                     Form(
                       child: Column(
@@ -69,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           const SizedBox(height: 8),
                           TextFormField(
-                            controller: null,
+                            controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: 'Email',
@@ -98,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           const SizedBox(height: 8),
                           TextFormField(
-                            controller: null,
+                            controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               hintText: 'Password',
@@ -120,20 +154,52 @@ class _SignUpState extends State<SignUp> {
                                   vertical: 4, horizontal: 16),
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: RaisedButton(
-                              onPressed: () {},
-                              shape: RoundedRectangleBorder(
+                          const SizedBox(height: 16),
+                          //autentifikasi password
+                          TextFormField(
+                            controller: _autentifikasiController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: 'Confirm Password',
+                              fillColor: Colors.white,
+                              filled: true,
+                              focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                ),
                               ),
-                              color: const Color(0xFF4f4f4f),
-                              elevation: 0,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: const Text(
-                                'Daftar',
-                                style: TextStyle(color: Colors.white),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 16),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: GestureDetector(
+                              onTap: register,
+                              child: Container(
+                                padding: const EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Daftar',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -148,24 +214,17 @@ class _SignUpState extends State<SignUp> {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: Column(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Tidak Punya Akun ?'),
+                        child: Text('Sudah Punya Akun ?'),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MyApp(),
-                            ),
-                          );
-                        },
+                        onTap: widget.showLoginPage,
                         child: const Text(
-                          'Daftar Disini',
+                          'Login Disini',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

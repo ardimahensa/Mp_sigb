@@ -1,16 +1,37 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
-import 'package:sigb/loginandsignup/signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final VoidCallback showRegisterPage;
+  const Login({
+    Key? key,
+    required this.showRegisterPage,
+  }) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  //text controller
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +51,7 @@ class _LoginState extends State<Login> {
                           child: Text(
                             'HELLO.',
                             style: TextStyle(
-                              fontSize: 48,
+                              fontSize: 40,
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.5,
@@ -69,7 +90,7 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 8),
                           TextFormField(
-                            controller: null,
+                            controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: 'Email',
@@ -98,7 +119,7 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 8),
                           TextFormField(
-                            controller: null,
+                            controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               hintText: 'Password',
@@ -121,19 +142,26 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: RaisedButton(
-                              onPressed: () {},
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              color: const Color(0xFF4f4f4f),
-                              elevation: 0,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: const Text(
-                                'Login',
-                                style: TextStyle(color: Colors.white),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: GestureDetector(
+                              onTap: signIn,
+                              child: Container(
+                                padding: const EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -148,7 +176,7 @@ class _LoginState extends State<Login> {
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: Column(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       const Padding(
@@ -156,14 +184,7 @@ class _LoginState extends State<Login> {
                         child: Text('Tidak Punya Akun ?'),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignUp(),
-                            ),
-                          );
-                        },
+                        onTap: widget.showRegisterPage,
                         child: const Text(
                           'Daftar Disini',
                           style: TextStyle(
