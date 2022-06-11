@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //warna
 mixin ColorPalette {
+  static const Color grey = Color.fromRGBO(165, 164, 172, 100);
   static const Color aquaHaze = Color(0xffeff5f4);
   static const Color pacificBlue = Color(0xff00b7b7);
   static const Color white = Color(0xffffffff);

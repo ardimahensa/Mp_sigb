@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sigb/page/setting.dart';
 
 class HomePage extends StatefulWidget {
@@ -142,22 +143,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(229, 236, 174, 40),
+        backgroundColor: ColorPalette.bondyBlue.withOpacity(0.5),
+        elevation: 0,
         actions: [
-          IconButton(
-            splashColor: Colors.white,
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const HomePage(),
-                ),
-              );
-            },
-          ),
           IconButton(
             icon: const Icon(
               Icons.logout_outlined,
@@ -175,87 +163,118 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey,
-      body: SafeArea(
-        child: StreamBuilder(
-          stream: _gabah.snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-            if (streamSnapshot.hasData) {
-              return ListView.builder(
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  final DocumentSnapshot documentSnapshot =
-                      streamSnapshot.data!.docs[index];
-                  return Card(
-                    margin: const EdgeInsets.all(15),
-                    child: ListTile(
-                      title: Text(
-                        documentSnapshot['produk'],
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        // alignment: Alignment.bottomLeft,
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Stok Tersedia : ' +
-                                      documentSnapshot['stok'].toString() +
-                                      ' ' +
-                                      documentSnapshot['berat'],
-                                  style: const TextStyle(color: Colors.red),
-                                  textAlign: TextAlign.left,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Harga : Rp' +
-                                      documentSnapshot['harga'].toString() +
-                                      '/' +
-                                      documentSnapshot['berat'],
-                                  style: const TextStyle(color: Colors.green),
-                                ),
-                              ],
-                            )
-                          ],
+      backgroundColor: ColorPalette.grey,
+      body: Column(
+        children: [
+          Container(
+            height: 50,
+            width: 400,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: const Radius.circular(40),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(5, 5),
+                  blurRadius: 10,
+                  color: const Color(0xff000000).withOpacity(0.15),
+                ),
+              ],
+              color: ColorPalette.bondyBlue.withOpacity(0.5),
+            ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Akun : ' + user.email!,
+                style: GoogleFonts.workSans(
+                    color: ColorPalette.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+          StreamBuilder(
+            stream: _gabah.snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+              if (streamSnapshot.hasData) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: streamSnapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final DocumentSnapshot documentSnapshot =
+                        streamSnapshot.data!.docs[index];
+                    return Card(
+                      margin: const EdgeInsets.all(15),
+                      child: ListTile(
+                        title: Text(
+                          documentSnapshot['produk'],
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
-                      ),
-                      // dense: true,
-                      isThreeLine: true,
-                      trailing: SizedBox(
-                        width: 96,
-                        child: Row(
-                          children: [
-                            //Icon untuk Update
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () =>
-                                  _createOrUpdate(documentSnapshot),
-                              color: Colors.blueAccent,
-                            ),
-                            //Icon untuk Delete
-                            IconButton(
-                                icon: const Icon(Icons.delete),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          // alignment: Alignment.bottomLeft,
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Stok Tersedia : ' +
+                                        documentSnapshot['stok'].toString() +
+                                        ' ' +
+                                        documentSnapshot['berat'],
+                                    style: const TextStyle(color: Colors.red),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'Harga : Rp' +
+                                        documentSnapshot['harga'].toString() +
+                                        '/' +
+                                        documentSnapshot['berat'],
+                                    style: const TextStyle(color: Colors.green),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        // dense: true,
+                        isThreeLine: true,
+                        trailing: SizedBox(
+                          width: 96,
+                          child: Row(
+                            children: [
+                              //Icon untuk Update
+                              IconButton(
+                                icon: const Icon(Icons.edit),
                                 onPressed: () =>
-                                    _deleteProduct(documentSnapshot.id),
-                                color: Colors.redAccent),
-                          ],
+                                    _createOrUpdate(documentSnapshot),
+                                color: Colors.blueAccent,
+                              ),
+                              //Icon untuk Delete
+                              IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () =>
+                                      _deleteProduct(documentSnapshot.id),
+                                  color: Colors.redAccent),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }
+                    );
+                  },
+                );
+              }
 
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),

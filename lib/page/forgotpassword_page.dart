@@ -2,6 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sigb/page/setting.dart';
+import 'setting.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -53,77 +56,160 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 41, 170, 199),
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          elevation: 0,
+      appBar: AppBar(
+        backgroundColor: const Color(0xffd5e2e3),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          onPressed: () => Navigator.of(context).pop(),
+          color: ColorPalette.timberGreen,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                'Masukan Email Yang Ingin Kamu Reset Passwordnya',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: 0.5,
-                  color: Colors.white,
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
+        elevation: 0,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          color: Color(0xffd5e2e3),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(width: 20, height: 20),
+                Image.asset(
+                  'assets/images/forget.png',
+                  height: 250,
+                  width: 400,
                 ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  fillColor: Colors.white,
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
+                const SizedBox(height: 10),
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromRGBO(255, 153, 51, 10),
+                      ),
                     ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
+                    Container(
+                      width: 350,
+                      height: 445,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(141, 141, 161, 180)
+                            .withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 5),
+                            blurRadius: 10,
+                            color: const Color.fromARGB(255, 75, 73, 73)
+                                .withOpacity(0.2),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 130),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Masukan Email Yang Sudah Terdaftar',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.sourceSansPro(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 28,
+                              color: ColorPalette.white),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 230, left: 40, right: 40),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorPalette.aquaHaze,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 5),
+                              blurRadius: 10,
+                              color: const Color(0xff000000).withOpacity(0.16),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: TextField(
+                            style: GoogleFonts.workSans(
+                                color: const Color.fromARGB(255, 15, 15, 16),
+                                fontSize: 17,
+                                fontWeight: FontWeight.w300),
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.email_sharp,
+                                shadows: [
+                                  BoxShadow(
+                                    offset: const Offset(3, 4),
+                                    blurRadius: 10,
+                                    color: const Color(0xff000000)
+                                        .withOpacity(0.16),
+                                  ),
+                                ],
+                              ),
+                              border: InputBorder.none,
+                              hintText: "Email",
+                              // filled: true,
+                              fillColor: Colors.transparent,
+                            ),
+                            cursorColor: ColorPalette.timberGreen,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 300, left: 40, right: 40),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: MaterialButton(
+                          onPressed: passwordReset,
+                          child: Container(
+                            height: 45,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: ColorPalette.mandy,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 5),
+                                  blurRadius: 10,
+                                  color:
+                                      const Color(0xff000000).withOpacity(0.16),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Reset",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
-            MaterialButton(
-              onPressed: passwordReset,
-              color: Colors.grey,
-              child: Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  'Reset Password',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }

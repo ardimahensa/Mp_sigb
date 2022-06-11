@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sigb/page/forgotpassword_page.dart';
+import 'package:sigb/page/setting.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -20,10 +22,23 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
+      print(e);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -36,198 +51,262 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SafeArea(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Row(
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.only(top: 30),
-                          child: Text(
-                            'HELLO.',
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Divider(
-                            thickness: 3,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                      ],
-                    ),
-                    const Text(
-                      'Selamat Datang',
-                      style: TextStyle(
-                        fontSize: 36,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 5,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          color: Color(0xffd5e2e3),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(width: 20, height: 20),
+                Image.asset(
+                  'assets/images/login.png',
+                  height: 250,
+                  width: 400,
+                ),
+                const SizedBox(height: 10),
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromRGBO(255, 153, 51, 10),
                       ),
                     ),
-                    const SizedBox(width: 40),
-                    const SizedBox(height: 40),
-// Form username & password
-                    Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Text(
-                            'Email',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              hintText: 'Email',
-                              fillColor: Colors.white,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 16),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Password',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: 'Password',
-                              fillColor: Colors.white,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 16),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return const ForgotPassword();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Lupa Password ?',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: GestureDetector(
-                              onTap: signIn,
-                              child: Container(
-                                padding: const EdgeInsets.all(13),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Login',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                    Container(
+                      width: 350,
+                      height: 500,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(141, 141, 161, 180)
+                            .withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 5),
+                            blurRadius: 10,
+                            color: const Color.fromARGB(255, 75, 73, 73)
+                                .withOpacity(0.2),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  margin: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Tidak Punya Akun ?'),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Selamat Datang',
+                          style: GoogleFonts.sourceSansPro(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                              color: ColorPalette.white),
+                        ),
                       ),
-                      GestureDetector(
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 80, left: 40, right: 40),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorPalette.aquaHaze,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 5),
+                              blurRadius: 10,
+                              color: const Color(0xff000000).withOpacity(0.16),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: TextField(
+                            style: GoogleFonts.workSans(
+                                color: const Color.fromARGB(255, 15, 15, 16),
+                                fontSize: 17,
+                                fontWeight: FontWeight.w300),
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.email_sharp,
+                                shadows: [
+                                  BoxShadow(
+                                    offset: const Offset(3, 4),
+                                    blurRadius: 10,
+                                    color: const Color(0xff000000)
+                                        .withOpacity(0.16),
+                                  ),
+                                ],
+                              ),
+                              border: InputBorder.none,
+                              hintText: "Email",
+                              // filled: true,
+                              fillColor: Colors.transparent,
+                            ),
+                            cursorColor: ColorPalette.timberGreen,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 160, left: 40, right: 40),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorPalette.aquaHaze,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 5),
+                              blurRadius: 10,
+                              color: const Color(0xff000000).withOpacity(0.16),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: TextField(
+                            style: GoogleFonts.workSans(
+                                color: ColorPalette.timberGreen,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w300),
+                            controller: _passwordController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.password_sharp,
+                                shadows: [
+                                  BoxShadow(
+                                    offset: const Offset(3, 4),
+                                    blurRadius: 10,
+                                    color: const Color(0xff000000)
+                                        .withOpacity(0.16),
+                                  ),
+                                ],
+                              ),
+                              border: InputBorder.none,
+                              hintText: "Password",
+                              // filled: true,
+                              fillColor: Colors.transparent,
+                            ),
+                            cursorColor: ColorPalette.timberGreen,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 225, left: 40, right: 40),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: (() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ForgotPassword();
+                                },
+                              ),
+                            );
+                          }),
+                          child: Text(
+                            'Lupa Password ?',
+                            style: GoogleFonts.sourceSansPro(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: ColorPalette.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 280, left: 40, right: 40),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: signIn,
+                          child: Container(
+                            height: 45,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color.fromARGB(209, 0, 183, 183),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 5),
+                                  blurRadius: 10,
+                                  color:
+                                      const Color(0xff000000).withOpacity(0.16),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorPalette.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 360, left: 40, right: 210),
+                      child: Divider(
+                        thickness: 2,
+                        color: Color.fromRGBO(255, 153, 51, 50),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 350, left: 40, right: 40),
+                      child: Text(
+                        '=',
+                        style:
+                            TextStyle(color: ColorPalette.white, fontSize: 30),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 360, left: 210, right: 40),
+                      child: Divider(
+                        thickness: 2,
+                        color: Color.fromRGBO(255, 153, 51, 50),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 400, left: 40, right: 40),
+                      child: Text(
+                        'Tidak Punya Akun ?',
+                        style:
+                            TextStyle(color: ColorPalette.white, fontSize: 15),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 425, left: 40, right: 40),
+                      child: GestureDetector(
                         onTap: widget.showRegisterPage,
                         child: const Text(
                           'Daftar Disini',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
+                              color: Color.fromARGB(255, 255, 197, 8),
+                              fontSize: 20),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),
