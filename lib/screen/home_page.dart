@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(40),
-                bottomRight: const Radius.circular(40),
+                bottomRight: Radius.circular(40),
               ),
               boxShadow: [
                 BoxShadow(
