@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sigb/page/setting.dart';
 
 class SignUp extends StatefulWidget {
+  //TODO: Memanggil fungsi showlogin
   final VoidCallback showLoginPage;
   const SignUp({
     Key? key,
@@ -18,7 +19,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  //text controller
+  //TODO: text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _autentifikasiController = TextEditingController();
@@ -27,6 +28,7 @@ class _SignUpState extends State<SignUp> {
   final _ageController = TextEditingController();
 
   @override
+  //TODO: Agar memory tidak overload
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -37,6 +39,7 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  //TODO: Fungsi untuk daftar
   Future register() async {
     try {
       if (passwordConfirm()) {
@@ -67,6 +70,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  //TODO: Fungsi untuk detail user akun
   Future addUserDetail(
       String firstName, String lastName, int age, String email) async {
     await FirebaseFirestore.instance.collection('users').add({
@@ -140,6 +144,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form nama depan
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 200, left: 40, right: 40),
@@ -186,6 +191,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form nama belakang
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 260, left: 40, right: 40),
@@ -232,6 +238,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form umur
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 320, left: 40, right: 40),
@@ -278,6 +285,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form email
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 380, left: 40, right: 40),
@@ -324,6 +332,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form password
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 440, left: 40, right: 40),
@@ -370,6 +379,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Form autentifikasi password
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 500, left: 40, right: 40),
@@ -416,6 +426,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    //TODO: Tombol daftar
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 565, left: 40, right: 40),
@@ -482,6 +493,7 @@ class _SignUpState extends State<SignUp> {
                             TextStyle(color: ColorPalette.white, fontSize: 15),
                       ),
                     ),
+                    //TODO: Login akun
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 670, left: 40, right: 40),

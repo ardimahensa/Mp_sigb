@@ -17,15 +17,30 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //text controller
+  //TODO: text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  //TODO: Fungsi untuk login
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
+      );
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text(
+              'Berhasil Login 😊',
+              style: TextStyle(
+                fontSize: 17,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
       );
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
@@ -41,6 +56,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  //TODO: Agar memory tidak overload
   @override
   void dispose() {
     _emailController.dispose();
@@ -106,6 +122,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    //TODO: Email form
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 80, left: 40, right: 40),
@@ -152,6 +169,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    //TODO: Password form
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 160, left: 40, right: 40),
@@ -198,6 +216,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    //TODO: Lupa Password
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 225, left: 40, right: 40),
@@ -224,6 +243,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    //TODO: Tombol Login
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 280, left: 40, right: 40),
@@ -290,6 +310,7 @@ class _LoginState extends State<Login> {
                             TextStyle(color: ColorPalette.white, fontSize: 15),
                       ),
                     ),
+                    //TODO: Daftar Akun
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 425, left: 40, right: 40),

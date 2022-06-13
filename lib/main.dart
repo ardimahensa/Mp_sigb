@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:sigb/auth/main_page.dart';
 
 void main() async {
+  //TODO: Penghubung ke firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  //TODO: Menghilangkan status bar dan bottom navigasi
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(const MyApp());

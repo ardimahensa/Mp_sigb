@@ -14,18 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //user auth
+  //TODO: Auth user dari firebase
   final user = FirebaseAuth.instance.currentUser!;
-  // text controller
+  //TODO: text controller
   final TextEditingController _produkController = TextEditingController();
   final TextEditingController _stokController = TextEditingController();
   final TextEditingController _beratController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
-  //Sambungan ke database firestore
+  //TODO: Memanggil collection database firestore
   final CollectionReference _gabah =
       FirebaseFirestore.instance.collection('gabah');
 
-  //Trigger untuk floating action button
+  //TODO: Fungsi untuk floating action button
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
     if (documentSnapshot != null) {
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               top: 20,
               left: 20,
               right: 20,
-              //Input Textfield
+              //TODO: Form input
               bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
 
-              //Fungsi untuk Create dan Update
+              //TODO: Tombol untuk Create dan Update
               ElevatedButton(
                 child: Text(action == 'create' ? 'Create' : 'Update'),
                 onPressed: () async {
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                       berat != null &&
                       harga != null) {
                     if (action == 'create') {
-                      // Mengirim ke collection
+                      //TODO: Mengirim ke collection
                       await _gabah.add({
                         "produk": produk,
                         "stok": stok,
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     if (action == 'update') {
-                      // Perintah update
+                      //TODO: Perintah update
                       await _gabah.doc(documentSnapshot!.id).update({
                         "produk": produk,
                         "stok": stok,
@@ -111,13 +111,13 @@ class _HomePageState extends State<HomePage> {
                       });
                     }
 
-                    // Menghapus textfield
+                    //TODO: Menghapus textfield
                     _produkController.text = '';
                     _stokController.text = '';
                     _beratController.text = '';
                     _hargaController.text = '';
 
-                    // Menghilangkan bottom sheet
+                    //TODO: Menghilangkan bottom sheet
                     Navigator.of(context).pop();
                   }
                 },
@@ -129,11 +129,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Fungsi untuk delete
+  //TODO: Fungsi untuk delete
   Future<void> _deleteProduct(String gabahId) async {
     await _gabah.doc(gabahId).delete();
 
-    // Tampulan jika data terhapus
+    //TODO: Notifikasi jika data berhasil terhapus
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Data berhasil dihapus')));
   }
@@ -146,6 +146,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: ColorPalette.bondyBlue.withOpacity(0.5),
         elevation: 0,
         actions: [
+          //TODO: Tombol untuk logout
           IconButton(
             icon: const Icon(
               Icons.logout_outlined,
@@ -194,6 +195,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          //TODO: Pemanggilan dokumen collection dari firestore
           StreamBuilder(
             stream: _gabah.snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -241,20 +243,19 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        // dense: true,
                         isThreeLine: true,
                         trailing: SizedBox(
                           width: 96,
                           child: Row(
                             children: [
-                              //Icon untuk Update
+                              //TODO: Icon untuk Update
                               IconButton(
                                 icon: const Icon(Icons.edit),
                                 onPressed: () =>
                                     _createOrUpdate(documentSnapshot),
                                 color: Colors.blueAccent,
                               ),
-                              //Icon untuk Delete
+                              //TODO: Icon untuk Delete
                               IconButton(
                                   icon: const Icon(Icons.delete),
                                   onPressed: () =>
@@ -276,6 +277,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      //TODO: tombol floating
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),
         backgroundColor: const Color.fromARGB(229, 236, 174, 40),

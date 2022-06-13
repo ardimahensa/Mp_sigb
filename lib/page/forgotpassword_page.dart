@@ -14,14 +14,17 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  //TODO: Text controller
   final _emailController = TextEditingController();
 
+  //TODO: Agar memory tidak overload
   @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
   }
 
+  //TODO: Fungsi untuk reset password email
   Future passwordReset() async {
     try {
       await FirebaseAuth.instance
@@ -121,6 +124,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
+                    //TODO: Email form
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 230, left: 40, right: 40),
@@ -167,6 +171,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
+                    //TODO: Tombol Reset
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 300, left: 40, right: 40),
