@@ -14,17 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: todo
   //TODO: Auth user dari firebase
   final user = FirebaseAuth.instance.currentUser!;
+  // ignore: todo
   //TODO: text controller
   final TextEditingController _produkController = TextEditingController();
   final TextEditingController _stokController = TextEditingController();
   final TextEditingController _beratController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
+  // ignore: todo
   //TODO: Memanggil collection database firestore
   final CollectionReference _gabah =
       FirebaseFirestore.instance.collection('gabah');
 
+  // ignore: todo
   //TODO: Fungsi untuk floating action button
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
@@ -45,6 +49,7 @@ class _HomePageState extends State<HomePage> {
               top: 20,
               left: 20,
               right: 20,
+              // ignore: todo
               //TODO: Form input
               bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
           child: Column(
@@ -79,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
 
+              // ignore: todo
               //TODO: Tombol untuk Create dan Update
               ElevatedButton(
                 child: Text(action == 'create' ? 'Create' : 'Update'),
@@ -92,6 +98,7 @@ class _HomePageState extends State<HomePage> {
                       berat != null &&
                       harga != null) {
                     if (action == 'create') {
+                      // ignore: todo
                       //TODO: Mengirim ke collection
                       await _gabah.add({
                         "produk": produk,
@@ -102,6 +109,7 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     if (action == 'update') {
+                      // ignore: todo
                       //TODO: Perintah update
                       await _gabah.doc(documentSnapshot!.id).update({
                         "produk": produk,
@@ -111,12 +119,14 @@ class _HomePageState extends State<HomePage> {
                       });
                     }
 
+                    // ignore: todo
                     //TODO: Menghapus textfield
                     _produkController.text = '';
                     _stokController.text = '';
                     _beratController.text = '';
                     _hargaController.text = '';
 
+                    // ignore: todo
                     //TODO: Menghilangkan bottom sheet
                     Navigator.of(context).pop();
                   }
@@ -129,10 +139,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: todo
   //TODO: Fungsi untuk delete
   Future<void> _deleteProduct(String gabahId) async {
     await _gabah.doc(gabahId).delete();
 
+    // ignore: todo
     //TODO: Notifikasi jika data berhasil terhapus
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Data berhasil dihapus')));
@@ -146,6 +158,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: ColorPalette.bondyBlue.withOpacity(0.5),
         elevation: 0,
         actions: [
+          // ignore: todo
           //TODO: Tombol untuk logout
           IconButton(
             icon: const Icon(
@@ -195,6 +208,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          // ignore: todo
           //TODO: Pemanggilan dokumen collection dari firestore
           StreamBuilder(
             stream: _gabah.snapshots(),
@@ -248,6 +262,7 @@ class _HomePageState extends State<HomePage> {
                           width: 96,
                           child: Row(
                             children: [
+                              // ignore: todo
                               //TODO: Icon untuk Update
                               IconButton(
                                 icon: const Icon(Icons.edit),
@@ -255,6 +270,7 @@ class _HomePageState extends State<HomePage> {
                                     _createOrUpdate(documentSnapshot),
                                 color: Colors.blueAccent,
                               ),
+                              // ignore: todo
                               //TODO: Icon untuk Delete
                               IconButton(
                                   icon: const Icon(Icons.delete),
@@ -277,6 +293,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      // ignore: todo
       //TODO: tombol floating
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),

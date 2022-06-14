@@ -9,6 +9,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ignore: todo
       //TODO: Mengidentifikasi user masih login atau tidak
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),

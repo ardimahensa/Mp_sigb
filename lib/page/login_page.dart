@@ -17,10 +17,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // ignore: todo
   //TODO: text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  // ignore: todo
   //TODO: Fungsi untuk login
   Future signIn() async {
     try {
@@ -56,6 +58,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // ignore: todo
   //TODO: Agar memory tidak overload
   @override
   void dispose() {
@@ -122,6 +125,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Email form
                     Padding(
                       padding:
@@ -169,6 +173,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Password form
                     Padding(
                       padding:
@@ -216,6 +221,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Lupa Password
                     Padding(
                       padding:
@@ -243,6 +249,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Tombol Login
                     Padding(
                       padding:
@@ -310,6 +317,7 @@ class _LoginState extends State<Login> {
                             TextStyle(color: ColorPalette.white, fontSize: 15),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Daftar Akun
                     Padding(
                       padding:

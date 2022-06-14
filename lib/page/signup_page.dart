@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sigb/page/setting.dart';
 
 class SignUp extends StatefulWidget {
+  // ignore: todo
   //TODO: Memanggil fungsi showlogin
   final VoidCallback showLoginPage;
   const SignUp({
@@ -19,6 +20,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  // ignore: todo
   //TODO: text controller
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -28,6 +30,7 @@ class _SignUpState extends State<SignUp> {
   final _ageController = TextEditingController();
 
   @override
+  // ignore: todo
   //TODO: Agar memory tidak overload
   void dispose() {
     _emailController.dispose();
@@ -39,6 +42,7 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  // ignore: todo
   //TODO: Fungsi untuk daftar
   Future register() async {
     try {
@@ -70,6 +74,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  // ignore: todo
   //TODO: Fungsi untuk detail user akun
   Future addUserDetail(
       String firstName, String lastName, int age, String email) async {
@@ -144,6 +149,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form nama depan
                     Padding(
                       padding:
@@ -191,6 +197,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form nama belakang
                     Padding(
                       padding:
@@ -238,6 +245,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form umur
                     Padding(
                       padding:
@@ -285,6 +293,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form email
                     Padding(
                       padding:
@@ -332,6 +341,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form password
                     Padding(
                       padding:
@@ -379,6 +389,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Form autentifikasi password
                     Padding(
                       padding:
@@ -426,6 +437,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Tombol daftar
                     Padding(
                       padding:
@@ -493,6 +505,7 @@ class _SignUpState extends State<SignUp> {
                             TextStyle(color: ColorPalette.white, fontSize: 15),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Login akun
                     Padding(
                       padding:

@@ -14,9 +14,11 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  // ignore: todo
   //TODO: Text controller
   final _emailController = TextEditingController();
 
+  // ignore: todo
   //TODO: Agar memory tidak overload
   @override
   void dispose() {
@@ -24,6 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     super.dispose();
   }
 
+  // ignore: todo
   //TODO: Fungsi untuk reset password email
   Future passwordReset() async {
     try {
@@ -124,6 +127,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Email form
                     Padding(
                       padding:
@@ -171,6 +175,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
+                    // ignore: todo
                     //TODO: Tombol Reset
                     Padding(
                       padding:
